@@ -19,12 +19,13 @@ import java.awt.image.BufferedImage;
 
 public class HttpServer {
     public static void main(String[] args) throws IOException {
+        int port = getPort();
         ServerSocket serverSocket = null;
         while (true) {
             try {
-                serverSocket = new ServerSocket(35000);
+                serverSocket = new ServerSocket(port);
             } catch (IOException e) {
-                System.err.println("Could not listen on port: 35000.");
+                System.err.println("Could not listen on port: " + port);
                 System.exit(1);
             }
 
@@ -127,5 +128,12 @@ public class HttpServer {
             e.printStackTrace();
         }
 
+    }
+
+    static int getPort() {
+        if (System.getenv("PORT") != null) {
+            return Integer.parseInt(System.getenv("PORT"));
+        }
+        return 35000; // returns default port if heroku-port isn't set(i.e. on localhost)
     }
 }
