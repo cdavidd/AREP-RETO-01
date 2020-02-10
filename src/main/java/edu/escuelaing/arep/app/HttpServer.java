@@ -57,7 +57,7 @@ public class HttpServer {
 
             String[] pathType = getType(archivo);
 
-            if (pathType[1] == "html") {
+            if (pathType[1] == "html" || pathType[1] == "js") {
                 getFile(pathType[0], out);
             } else if (pathType[1] == "img") {
                 getImg(pathType[0], clientSocket.getOutputStream());
