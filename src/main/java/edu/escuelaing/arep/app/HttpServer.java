@@ -23,7 +23,12 @@ public class HttpServer {
     static PrintWriter out = null;
     static Socket clientSocket = null;
     static BufferedReader in = null;
-
+    
+    /**
+     * Inicia el servidor para empezar a escuchar
+     * @param args
+     * @throws IOException 
+     */
     public static void main(String[] args) throws IOException {
         int port = getPort();
 
@@ -79,7 +84,12 @@ public class HttpServer {
             serverSocket.close();
         }
     }
-
+    
+    /**
+     * Analiza el archivo para devolver el path y que tipo es
+     * @param file
+     * @return 
+     */
     private static String[] getType(String file) {
         String path = "src/main/resources/";
         String[] res = new String[2];
@@ -98,7 +108,12 @@ public class HttpServer {
         res[0] = path;
         return res;
     }
-
+    
+    /**
+     * Muestra en pantalla el archivo pedido 
+     * @param path direccion al archivo
+     * @param out PrinWriter para mostar en pantalla
+     */
     private static void getFile(String path, PrintWriter out) {
         File archivo = new File(path);
         String temp, outputLine = "HTTP/1.1 200 OK\r\n" + "Content-Type: text/html\r\n" + "\r\n";
@@ -126,7 +141,12 @@ public class HttpServer {
         // System.out.println("outputLine " + outputLine);
 
     }
-
+    
+    /**
+     * Muestra en pantalla la imagen pedida
+     * @param path direccion al archivo
+     * @param clientOutput para mostar en pantalla
+     */
     private static void getImg(String path, OutputStream clientOutput) {
         File archivo = new File(path);
         if (archivo.exists()) {
@@ -147,23 +167,15 @@ public class HttpServer {
         }
 
     }
-
+    
+    /**
+     * Puerto a utilizar
+     * @return 
+     */
     static int getPort() {
         if (System.getenv("PORT") != null) {
             return Integer.parseInt(System.getenv("PORT"));
         }
         return 35000; // returns default port if heroku-port isn't set(i.e. on localhost)
-    }
-
-    static void close() {
-        out.close();
-        try {
-            in.close();
-            clientSocket.close();
-            serverSocket.close();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
     }
 }
